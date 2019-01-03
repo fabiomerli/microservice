@@ -11,6 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 import it.test.springboot.microservices.entity.ExchangeValue;
 import it.test.springboot.microservices.repo.ExchangeValueRepository;
 
+/**
+ * 
+ * @author Fabio Merli
+ *
+ */
 @RestController
 public class ForexController {
 	
