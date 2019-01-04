@@ -19,30 +19,36 @@ import it.test.springboot.microservices.repo.ExchangeValueRepository;
  */
 @RestController
 public class ForexController {
-	
+
 	private static final Logger LOGGER = LogManager.getLogger(ForexController.class);
-  
-  @Autowired
-  private Environment environment;
-  
-  @Autowired
-  private ExchangeValueRepository repository;
-  
-  @Autowired
-  private CustomConfigurationProperties prop;
-  
-  @GetMapping("/currency-exchange/from/{from}/to/{to}")
-  public ExchangeValue retrieveExchangeValue
-    (@PathVariable String from, @PathVariable String to){
-    
-    ExchangeValue exchangeValue = 
-        repository.findByFromAndTo(from, to);
-    
-    exchangeValue.setPort(
-        Integer.parseInt(environment.getProperty("local.server.port")));
-    
-    LOGGER.info("INFO:  {}", exchangeValue);
-    LOGGER.info("Custom properties loaded {}", prop);
-    return exchangeValue;
-  }
+
+	@Autowired
+	private Environment environment;
+
+	@Autowired
+	private ExchangeValueRepository repository;
+
+	@Autowired
+	private CustomConfigurationProperties prop;
+
+	public ForexController() {
+
+	}
+
+	public ForexController(ExchangeValueRepository repository) {
+		this.repository = repository;
+	}
+
+	@GetMapping("/currency-exchange/from/{from}/to/{to}")
+	public ExchangeValue retrieveExchangeValue(@PathVariable String from, @PathVariable String to) {
+
+		ExchangeValue exchangeValue = repository.findByFromAndTo(from, to);
+
+		if (environment != null) {
+			exchangeValue.setPort(Integer.parseInt(environment.getProperty("local.server.port")));
+		}
+		LOGGER.info("INFO:  {}", exchangeValue);
+		LOGGER.info("Custom properties loaded {}", prop);
+		return exchangeValue;
+	}
 }
