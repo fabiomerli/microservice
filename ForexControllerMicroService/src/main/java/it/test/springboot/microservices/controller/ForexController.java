@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import it.test.springboot.microservices.CustomConfigurationProperties;
 import it.test.springboot.microservices.entity.ExchangeValue;
 import it.test.springboot.microservices.repo.ExchangeValueRepository;
 
@@ -27,6 +28,9 @@ public class ForexController {
   @Autowired
   private ExchangeValueRepository repository;
   
+  @Autowired
+  private CustomConfigurationProperties prop;
+  
   @GetMapping("/currency-exchange/from/{from}/to/{to}")
   public ExchangeValue retrieveExchangeValue
     (@PathVariable String from, @PathVariable String to){
@@ -38,6 +42,7 @@ public class ForexController {
         Integer.parseInt(environment.getProperty("local.server.port")));
     
     LOGGER.info("INFO:  {}", exchangeValue);
+    LOGGER.info("Custom properties loaded {}", prop);
     return exchangeValue;
   }
 }
