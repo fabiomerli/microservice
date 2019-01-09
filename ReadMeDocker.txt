@@ -3,14 +3,15 @@ Container
 ###################
 
 docker build -t friendlyhello .  # Create image using this directory's Dockerfile
-docker run -p 4000:80 friendlyhello  # Run "friendlyname" mapping port 4000 to 80
-docker run -d -p 4000:80 friendlyhello         # Same thing, but in detached mode
+docker run -p 4000:80 --network="microservicenetwork" friendlyhello  # Run "friendlyname" mapping port 4000 to 80
+docker run -d -p 4000:80 --network="microservicenetwork" friendlyhello         # Same thing, but in detached mode
 docker container ls                                # List all running containers
 docker container ls -a             # List all containers, even those not running
 docker container stop <hash>           # Gracefully stop the specified container
 docker container kill <hash>         # Force shutdown of the specified container
 docker container rm <hash>        # Remove specified container from this machine
 docker container rm $(docker container ls -a -q)         # Remove all containers
+docker container stop $(docker container ls -a -q)
 docker container ls -q                                      # List container IDs
 docker image ls -a                             # List all images on this machine
 docker image rm <image id>            # Remove specified image from this machine
@@ -21,6 +22,7 @@ export DOCKER_ID_USER="username"  			     # utile per le push
 docker push username/repository:tag            # Upload tagged image to registry
 docker run username/repository:tag                   # Run image from a registry
 docker rmi nomeimmagine:tag  		       # remove tag without remove image
+docker network create -d bridge microservicenetwork
 
 ###################
 Service
