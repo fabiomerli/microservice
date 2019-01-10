@@ -3,15 +3,15 @@ services:
   my-web-application:
     image: fabiomerli/get-started:v_1.0.0
     deploy:
-      replicas: 5
+      replicas: 4
       resources:
         limits:
-          cpus: "0.1"
-          memory: 50M
+          cpus: "0.5"
+          memory: 300M
       restart_policy:
         condition: on-failure
     ports:
-      - "3500:80"
+      - "4000:80"
     networks:
       - webnet
 networks:

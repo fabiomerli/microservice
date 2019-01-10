@@ -1,4 +1,11 @@
 ###################
+START DOCKER
+###################
+
+systemctl stop docker
+systemctl start docker
+
+###################
 Container
 ###################
 
@@ -23,6 +30,8 @@ docker push username/repository:tag            # Upload tagged image to registry
 docker run username/repository:tag                   # Run image from a registry
 docker rmi nomeimmagine:tag  		       # remove tag without remove image
 docker network create -d bridge microservicenetwork
+docker logs <nome_container>
+docker exec -it <nome_container> bash
 
 ###################
 Service
@@ -37,6 +46,7 @@ docker inspect <task or container>                   # Inspect task or container
 docker stack rm <appname>                             # Tear down an application
 docker swarm leave --force      # Take down a single node swarm from the manager
 docker-compose pull <ServiceName>   # Download image dal repo con docker-compose
+docker service logs <nome_servizio>
 
 ###################
 Docker machine
